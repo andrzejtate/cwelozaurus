@@ -12,7 +12,7 @@ SprawdzAktualizacje() {
     serverVersion := Trim(serverVersion)
 
     ; Aktualna wersja aplikacji
-    currentVersion := "1.0.0"
+    currentVersion := "1.0.1"
     currentVersion := Trim(currentVersion)
 
     ; Komunikat do debugowania

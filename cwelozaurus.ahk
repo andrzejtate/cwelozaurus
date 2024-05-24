@@ -78,7 +78,6 @@ Thread := DllCall("CreateThread", "Ptr", 0, "UInt", 0, "Ptr", RegisterCallback("
 
 ; Tworzenie GUI
 Gui, Margin, 0, 0 ; usuwanie marginesow
-gui, add, text, x100 y100, gej
 Gui, Add, Picture, x0 y0 w%A_ScreenWidth% h%A_ScreenHeight% vcwelozaurus, %targetFile%
 Gui, Add, Button, x10 y10 w100 h30 vDWOR gDWOR, Wyjdź na dwór
 Gui, Add, Button, x170 y10 w150 h30 vdziewczyna gdziewczyna, Znajdź dziewczynę

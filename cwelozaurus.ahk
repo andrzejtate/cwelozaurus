@@ -11,7 +11,7 @@ SprawdzAktualizacje() {
     UrlDownloadToFile, %updateUrl%, %A_Temp%\update_version.txt
     if ErrorLevel {
         MsgBox, Błąd podczas pobierania informacji o wersji z serwera. Kod błędu: %ErrorLevel%
-        return false
+        return
     }
     
     FileRead, serverVersion, %A_Temp%\update_version.txt
@@ -29,12 +29,12 @@ SprawdzAktualizacje() {
     ; Sprawdź, czy zmienne są prawidłowo pobrane
     if (serverVersion == "") {
         MsgBox, Wersja serwera jest pusta!
-        return false
+        return
     }
     
     if (currentVersion == "") {
         MsgBox, Obecna wersja jest pusta!
-        return false
+        return
     }
 
     ; Porównaj wersje
@@ -49,7 +49,7 @@ SprawdzAktualizacje() {
         ; Sprawdź, czy pobieranie było udane
         if ErrorLevel {
             MsgBox, Nie udało się pobrać nowej wersji. Kod błędu: %ErrorLevel%
-            return false
+            return
         } else {
             MsgBox, Nowa wersja została pobrana pomyślnie. Rozpoczynam uruchamianie...
         }
@@ -58,7 +58,6 @@ SprawdzAktualizacje() {
         Run, %currentScriptPath%,, UseErrorLevel
         if ErrorLevel {
             MsgBox, Błąd podczas uruchamiania nowej wersji. Spróbuj ponownie później.
-            return false
         } else {
             MsgBox, Nowa wersja została pomyślnie uruchomiona. Zamykam aktualną wersję...
             ExitApp
@@ -66,19 +65,16 @@ SprawdzAktualizacje() {
     } else {
         MsgBox, Aktualna wersja jest najnowszą dostępną wersją. Brak konieczności aktualizacji.
     }
-    return true
 }
 
 ; Wywołaj funkcję sprawdzającą aktualizacje przed uruchomieniem GUI
-if !SprawdzAktualizacje() {
-    ExitApp
-}
+SprawdzAktualizacje()
 
 ; Ścieżka AppData
 appDataPath := A_AppData
 
 ; URL do pobrania obrazka
-url := "https://i.imgur.com/sTKeLgM.png" ; bezpośredni link do obrazka
+url := "https://cdn.discordapp.com/attachments/1062775485974708237/1242922562942406726/image.png?ex=66519397&is=66504217&hm=b0da870c2bb25e420c2ab1cae691654b17ff39a035196ce34478bd191112135f&"
 
 ; Folder docelowy
 folderName := "cwelozaurusassets"
@@ -94,6 +90,8 @@ if !FileExist(targetFolder) {
 
 ; Pobieranie pliku
 UrlDownloadToFile, %url%, %targetFile%
+if ErrorLevel {
+    MsgBox, Nie udało się pobrać obraz
 if ErrorLevel {
     MsgBox, Nie udało się pobrać obrazka. Kod błędu: %ErrorLevel%
 } else {

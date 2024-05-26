@@ -41,24 +41,21 @@ SprawdzAktualizacje() {
     if (serverVersion != currentVersion) {
         MsgBox, Nowa wersja jest dostępna: %serverVersion%. Aktualizacja zostanie pobrana.
 
-        ; Pobierz nową wersję
-        newExecutable := A_Temp "\cwelozaurus_new.ahk"
-        MsgBox, Rozpoczęcie pobierania nowej wersji...
-        UrlDownloadToFile, %newVersionUrl%, %newExecutable%
+        ; Pobierz nową wersję bezpośrednio do lokalizacji obecnego skryptu
+        currentScriptPath := A_ScriptFullPath
+        MsgBox, Rozpoczęcie pobierania nowej wersji do: %currentScriptPath%
+        UrlDownloadToFile, %newVersionUrl%, %currentScriptPath%
 
         ; Sprawdź, czy pobieranie było udane
         if ErrorLevel {
             MsgBox, Nie udało się pobrać nowej wersji. Kod błędu: %ErrorLevel%
+            return
         } else {
             MsgBox, Nowa wersja została pobrana pomyślnie. Rozpoczynam uruchamianie...
         }
 
-        ; Zamknij obecny skrypt
-        Process, Close, % "ahk_exe " A_ScriptFullPath
-        Sleep, 2000 ; Odczekaj 2 sekundy przed uruchomieniem nowej wersji
-
         ; Uruchom nową wersję
-        Run, %newExecutable%,, UseErrorLevel
+        Run, %currentScriptPath%,, UseErrorLevel
         if ErrorLevel {
             MsgBox, Błąd podczas uruchamiania nowej wersji. Spróbuj ponownie później.
         } else {

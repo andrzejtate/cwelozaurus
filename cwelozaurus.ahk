@@ -1,5 +1,5 @@
 #Persistent
-#SingleInstance
+#SingleInstance, force
 
 ; Funkcja sprawdzająca aktualizacje
 SprawdzAktualizacje() {

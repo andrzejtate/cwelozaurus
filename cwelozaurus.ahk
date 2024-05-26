@@ -92,6 +92,7 @@ if !FileExist(targetFolder) {
 UrlDownloadToFile, %url%, %targetFile%
 if ErrorLevel {
     MsgBox, Nie udało się pobrać obraz
+}
 if ErrorLevel {
     MsgBox, Nie udało się pobrać obrazka. Kod błędu: %ErrorLevel%
 } else {

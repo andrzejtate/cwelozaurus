@@ -74,7 +74,7 @@ SprawdzAktualizacje()
 appDataPath := A_AppData
 
 ; URL do pobrania obrazka
-url := "https://i.imgur.com/sTKeLgM.png"
+url := "https://i.imgur.com/sTKeLgM.png" ; bezpośredni link do obrazka
 
 ; Folder docelowy
 folderName := "cwelozaurusassets"
@@ -88,23 +88,20 @@ if !FileExist(targetFolder) {
     FileCreateDir, %targetFolder%
 }
 
-; Funkcja wątkowa do pobierania pliku
-DownloadImageThread(url, targetFile) {
-    global
-    UrlDownloadToFile, %url%, %targetFile%
-    GuiControl,, vcwelozaurus, %targetFile%
+; Pobieranie pliku
+UrlDownloadToFile, %url%, %targetFile%
+if ErrorLevel {
+    MsgBox, Nie udało się pobrać obrazka. Kod błędu: %ErrorLevel%
+} else {
+    ; Tworzenie GUI
+    Gui, Margin, 0, 0 ; usuwanie marginesow
+    Gui, Add, Picture, x0 y0 w%A_ScreenWidth% h%A_ScreenHeight% vcwelozaurus, %targetFile%
+    Gui, Add, Button, x10 y10 w100 h30 vDWOR gDWOR, Wyjdź na dwór
+    Gui, Add, Button, x170 y10 w150 h30 vdziewczyna gdziewczyna, Znajdź dziewczynę
+    Gui, Add, Button, w150 h100 x1770 y980 vEXIT gEXIT, WYŁĄCZ
+    Gui, Show, Maximize, CWELOZAURUS
 }
 
-; Utworzenie wątku
-Thread := DllCall("CreateThread", "Ptr", 0, "UInt", 0, "Ptr", RegisterCallback("DownloadImageThread", "Fast"), "Ptr", &url, "UInt", 0, "Ptr", 0)
-
-; Tworzenie GUI
-Gui, Margin, 0, 0 ; usuwanie marginesow
-Gui, Add, Picture, x0 y0 w%A_ScreenWidth% h%A_ScreenHeight% vcwelozaurus, %targetFile%
-Gui, Add, Button, x10 y10 w100 h30 vDWOR gDWOR, Wyjdź na dwór
-Gui, Add, Button, x170 y10 w150 h30 vdziewczyna gdziewczyna, Znajdź dziewczynę
-Gui, Add, Button, w150 h100 x1770 y980 vEXIT gEXIT, WYŁĄCZ
-Gui, Show, Maximize, CWELOZAURUS
 return
 
 ; Obsługa zamknięcia GUI

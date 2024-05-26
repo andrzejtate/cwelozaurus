@@ -89,14 +89,11 @@ if !FileExist(targetFolder) {
 }
 
 ; Funkcja wątkowa do pobierania pliku
-DownloadImageThread(url, targetFile) {
-    global
-    UrlDownloadToFile, %url%, %targetFile%
-    GuiControl,, vcwelozaurus, %targetFile%
-}
+UrlDownloadToFile, %url%, %targetFile%
+if ErrorLevel {
+    MsgBox, Nie udało się pobrać obrazka. Kod błędu: %ErrorLevel%
+} else {
 
-; Utworzenie wątku
-Thread := DllCall("CreateThread", "Ptr", 0, "UInt", 0, "Ptr", RegisterCallback("DownloadImageThread", "Fast"), "Ptr", &url, "UInt", 0, "Ptr", 0)
 
 ; Tworzenie GUI
 Gui, Margin, 0, 0 ; usuwanie marginesow
@@ -106,6 +103,7 @@ Gui, Add, Button, x170 y10 w150 h30 vdziewczyna gdziewczyna, Znajdź dziewczynę
 Gui, Add, Button, w150 h100 x1770 y980 vEXIT gEXIT, WYŁĄCZ
 Gui, Show, Maximize, CWELOZAURUS
 return
+}
 
 ; Obsługa zamknięcia GUI
 GuiClose:

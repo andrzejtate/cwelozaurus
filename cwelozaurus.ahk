@@ -16,10 +16,12 @@ SprawdzAktualizacje() {
     
     FileRead, serverVersion, %A_Temp%\update_version.txt
     serverVersion := Trim(serverVersion)
+    serverVersion := RegExReplace(serverVersion, "\s") ; Usuń wszystkie białe znaki
 
     ; Aktualna wersja aplikacji
     currentVersion := "1.0.1" ; Zaktualizuj tę wartość do najnowszej wersji
     currentVersion := Trim(currentVersion)
+    currentVersion := RegExReplace(currentVersion, "\s") ; Usuń wszystkie białe znaki
 
     ; Komunikat do debugowania
     MsgBox, Debugging info:`nObecna wersja: [%currentVersion%]`nWersja serwera: [%serverVersion%]

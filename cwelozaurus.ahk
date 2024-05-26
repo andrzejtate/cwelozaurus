@@ -77,7 +77,7 @@ SprawdzAktualizacje()
 appDataPath := A_AppData
 
 ; URL do pobrania obrazka
-url := "https://cdn.discordapp.com/attachments/1062775485974708237/1242922562942406726/image.png?ex=66519397&is=66504217&hm=b0da870c2bb25e420c2ab1cae691654b17ff39a035196ce34478bd191112135f&"
+url := "https://github.com/andrzejtate/cwelozaurus/blob/main/image.png"
 
 ; Folder docelowy
 folderName := "cwelozaurusassets"

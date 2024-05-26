@@ -19,7 +19,7 @@ SprawdzAktualizacje() {
     serverVersion := RegExReplace(serverVersion, "\s") ; Usuń wszystkie białe znaki
 
     ; Aktualna wersja aplikacji
-    currentVersion := "1.0.1" ; Zaktualizuj tę wartość do najnowszej wersji
+    currentVersion := "0.0.2" ; Zaktualizuj tę wartość do najnowszej wersji
     currentVersion := Trim(currentVersion)
     currentVersion := RegExReplace(currentVersion, "\s") ; Usuń wszystkie białe znaki
 

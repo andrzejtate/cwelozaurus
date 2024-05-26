@@ -74,7 +74,7 @@ SprawdzAktualizacje()
 appDataPath := A_AppData
 
 ; URL do pobrania obrazka
-url := "https://imgur.com/sTKeLgM"
+url := "https://i.imgur.com/sTKeLgM.png"
 
 ; Folder docelowy
 folderName := "cwelozaurusassets"

@@ -11,7 +11,7 @@ SprawdzAktualizacje() {
     UrlDownloadToFile, %updateUrl%, %A_Temp%\update_version.txt
     if ErrorLevel {
         MsgBox, Błąd podczas pobierania informacji o wersji z serwera. Kod błędu: %ErrorLevel%
-        return
+        return false
     }
     
     FileRead, serverVersion, %A_Temp%\update_version.txt
@@ -29,12 +29,12 @@ SprawdzAktualizacje() {
     ; Sprawdź, czy zmienne są prawidłowo pobrane
     if (serverVersion == "") {
         MsgBox, Wersja serwera jest pusta!
-        return
+        return false
     }
     
     if (currentVersion == "") {
         MsgBox, Obecna wersja jest pusta!
-        return
+        return false
     }
 
     ; Porównaj wersje
@@ -49,7 +49,7 @@ SprawdzAktualizacje() {
         ; Sprawdź, czy pobieranie było udane
         if ErrorLevel {
             MsgBox, Nie udało się pobrać nowej wersji. Kod błędu: %ErrorLevel%
-            return
+            return false
         } else {
             MsgBox, Nowa wersja została pobrana pomyślnie. Rozpoczynam uruchamianie...
         }
@@ -58,6 +58,7 @@ SprawdzAktualizacje() {
         Run, %currentScriptPath%,, UseErrorLevel
         if ErrorLevel {
             MsgBox, Błąd podczas uruchamiania nowej wersji. Spróbuj ponownie później.
+            return false
         } else {
             MsgBox, Nowa wersja została pomyślnie uruchomiona. Zamykam aktualną wersję...
             ExitApp
@@ -65,10 +66,13 @@ SprawdzAktualizacje() {
     } else {
         MsgBox, Aktualna wersja jest najnowszą dostępną wersją. Brak konieczności aktualizacji.
     }
+    return true
 }
 
 ; Wywołaj funkcję sprawdzającą aktualizacje przed uruchomieniem GUI
-SprawdzAktualizacje()
+if !SprawdzAktualizacje() {
+    ExitApp
+}
 
 ; Ścieżka AppData
 appDataPath := A_AppData

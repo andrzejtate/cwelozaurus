@@ -1,5 +1,5 @@
 #Persistent
-#SingleInstance, force
+#SingleInstance force
 
 ; Funkcja sprawdzająca aktualizacje
 SprawdzAktualizacje() {
@@ -22,8 +22,20 @@ SprawdzAktualizacje() {
     currentVersion := Trim(currentVersion)
 
     ; Komunikat do debugowania
-    MsgBox, Obecna wersja: [%currentVersion%]`nWersja serwera: [%serverVersion%]
+    MsgBox, Debugging info:`nObecna wersja: [%currentVersion%]`nWersja serwera: [%serverVersion%]
 
+    ; Sprawdź, czy zmienne są prawidłowo pobrane
+    if (serverVersion == "") {
+        MsgBox, Wersja serwera jest pusta!
+        return
+    }
+    
+    if (currentVersion == "") {
+        MsgBox, Obecna wersja jest pusta!
+        return
+    }
+
+    ; Porównaj wersje
     if (serverVersion != currentVersion) {
         MsgBox, Nowa wersja jest dostępna: %serverVersion%. Aktualizacja zostanie pobrana.
 

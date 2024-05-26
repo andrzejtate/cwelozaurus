@@ -8,28 +8,34 @@ SprawdzAktualizacje() {
 
     ; Pobierz informacje o wersji z serwera
     UrlDownloadToFile, %updateUrl%, %A_Temp%\update_version.txt
+    if ErrorLevel {
+        MsgBox, Błąd podczas pobierania informacji o wersji z serwera. Kod błędu: %ErrorLevel%
+        return
+    }
+    
     FileRead, serverVersion, %A_Temp%\update_version.txt
     serverVersion := Trim(serverVersion)
 
     ; Aktualna wersja aplikacji
-    currentVersion := "1.0.1"
+    currentVersion := "1.0.1" ; Zaktualizuj tę wartość do najnowszej wersji
     currentVersion := Trim(currentVersion)
 
     ; Komunikat do debugowania
-    MsgBox, Obecna wersja: %currentVersion%`nWersja serwera: %serverVersion%
+    MsgBox, Obecna wersja: [%currentVersion%]`nWersja serwera: [%serverVersion%]
 
     if (serverVersion != currentVersion) {
         MsgBox, Nowa wersja jest dostępna: %serverVersion%. Aktualizacja zostanie pobrana.
 
         ; Pobierz nową wersję
         newExecutable := A_Temp "\cwelozaurus_new.ahk"
+        MsgBox, Rozpoczęcie pobierania nowej wersji...
         UrlDownloadToFile, %newVersionUrl%, %newExecutable%
 
         ; Sprawdź, czy pobieranie było udane
         if ErrorLevel {
             MsgBox, Nie udało się pobrać nowej wersji. Kod błędu: %ErrorLevel%
         } else {
-            MsgBox, Nowa wersja została pobrana pomyślnie.
+            MsgBox, Nowa wersja została pobrana pomyślnie. Rozpoczynam uruchamianie...
         }
 
         ; Zamknij obecny skrypt
@@ -41,8 +47,11 @@ SprawdzAktualizacje() {
         if ErrorLevel {
             MsgBox, Błąd podczas uruchamiania nowej wersji. Spróbuj ponownie później.
         } else {
+            MsgBox, Nowa wersja została pomyślnie uruchomiona. Zamykam aktualną wersję...
             ExitApp
         }
+    } else {
+        MsgBox, Aktualna wersja jest najnowszą dostępną wersją. Brak konieczności aktualizacji.
     }
 }
 
@@ -69,6 +78,7 @@ if !FileExist(targetFolder) {
 
 ; Funkcja wątkowa do pobierania pliku
 DownloadImageThread(url, targetFile) {
+    global
     UrlDownloadToFile, %url%, %targetFile%
     GuiControl,, vcwelozaurus, %targetFile%
 }
